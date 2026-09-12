@@ -1,3 +1,4 @@
+
 #!/usr/bin/env lua
 -- @file: lua/plugins/treesitter.lua
 -- @mission: Highlight e analise sintatica do codigo
@@ -7,7 +8,6 @@ return {
   build = ":TSUpdate",
   event = { "BufReadPost", "BufNewFile" },
   config = function()
-    local status, configs = pcall(require, "nvim-treesitter.configs")
     if not status then
       return
     end

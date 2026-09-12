@@ -5,14 +5,7 @@ return {
   "nvim-tree/nvim-tree.lua",
   lazy = false,
   keys = {
-    {
-      "ee",
-      function()
-        require("nvim-tree.api").tree.toggle({ find_file = true, focus = true })
-      end,
-      desc = "nvim-tree: Toggle Explorer (ee)",
-    },
-    {
+       {
       "<leader>e",
       function()
         require("nvim-tree.api").tree.toggle({ find_file = true, focus = true })
