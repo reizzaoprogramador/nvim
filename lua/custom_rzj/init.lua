@@ -1,6 +1,12 @@
 -- @file: ~/.config/nvim/lua/custom_rzj/init.lua
 -- @mission: Carregar todos os módulos de configuração em ordem sequencial
 
+-- == OPTIONS FORCE ==
+-- 1. mapleader só funciona aqui no init no alto
+vim.g.mapleader = " "
+vim.opt.showtabline = 2 -- Mostra sempre a barra de abas no topo com os buffers abertos
+
+
 local modules = {
     "custom_rzj.netrw",
     "custom_rzj.01_options",

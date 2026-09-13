@@ -2,7 +2,6 @@
 -- @mission: Carregar todos os módulos de configuração em ordem sequencial
 
 local modules = {
-  "core.01_display",
   "core.04_colorscheme",
   "core.05_statusline",
   "core.06_autocommands",

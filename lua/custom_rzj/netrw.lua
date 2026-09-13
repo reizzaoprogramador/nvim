@@ -1,17 +1,21 @@
--- @file: nvim/lua/core/netrw.lua
--- @mission: Configuração do explorador nativo Netrw (Lado direito, padrões Vim)
+-- @file: lua/custom_rzj/netrw.lua
+-- @mission: Configuração do explorador nativo Netrw na direita abrindo arquivos na janela principal
 
 local M = {}
+
+-- Garantia de inicialização do plugin nativo Netrw
+vim.cmd("filetype plugin indent on")
+vim.cmd("packadd! netrw")
 
 -- Configurações Globais do Netrw
 vim.g.netrw_liststyle = 3     -- Árvore de diretórios
 vim.g.netrw_banner = 0        -- Oculta o banner superior
 vim.g.netrw_winsize = 25       -- Largura fixada em 25%
-vim.g.netrw_browse_split = 0  -- Abre arquivos na janela anterior
+vim.g.netrw_browse_split = 4  -- 4 força abrir o arquivo na janela anterior (horizontal principal)
 vim.g.netrw_altfile = 1       -- Mantém a referência do arquivo alternativo
 vim.g.netrw_altv = 1          -- Splits verticais à direita
 
--- Função de alternância do Netrw na extrema DIREITA (botright)
+-- Função de alternância do Netrw na extrema DIREITA (Lado da mão direita)
 function M.toggle_netrw()
     for _, win in ipairs(vim.api.nvim_list_wins()) do
         local buf = vim.api.nvim_win_get_buf(win)
@@ -20,12 +24,13 @@ function M.toggle_netrw()
             return
         end
     end
-    vim.cmd("botright vertical 25Lexplore")
+    -- Força a criação de uma janela vertical na extrema DIREITA e carrega o diretório
+    vim.cmd("botright vertical 30 split +Explore")
 end
 
 _G.ToggleNetrw = M.toggle_netrw
 
--- Função para criar arquivos/pastas
+-- Função nativa para criar arquivos/pastas abrindo na janela anterior
 local function create_netrw_entry()
     local fname = vim.fn.input("Nome do arquivo/pasta: ")
     if fname == "" then return end
@@ -60,9 +65,10 @@ local function create_netrw_entry()
 end
 
 function M.setup()
-    -- Atalhos Globais de Toggle (Lado Direito)
-    vim.keymap.set("n", "ew", M.toggle_netrw, { desc = "Toggle Netrw Explorer (Direita)" })
-    vim.keymap.set("n", "<leader>e", M.toggle_netrw, { desc = "Toggle Netrw Explorer (Direita)" })
+    -- Atalho exclusivo <leader>e
+    if M.toggle_netrw then
+        vim.keymap.set("n", "<leader>e", M.toggle_netrw, { desc = "Toggle Netrw Explorer (Direita)" })
+    end
 
     -- Mapeamentos Nativos dentro do buffer do Netrw (Padrão Vim RZJ)
     vim.api.nvim_create_autocmd("FileType", {
@@ -85,8 +91,8 @@ function M.setup()
             -- Navegação (h, j, k, l + Setas)
             bind("h", "-", "Subir nível de diretório (esquerda)")
             bind("<Left>", "-", "Subir nível de diretório")
-            bind("l", "<CR>", "Entrar no diretório / Abrir arquivo (direita)")
-            bind("<Right>", "<CR>", "Entrar no diretório / Abrir arquivo")
+            bind("l", "<CR>", "Entrar no diretório / Abrir arquivo na janela principal (direita)")
+            bind("<Right>", "<CR>", "Entrar no diretório / Abrir arquivo na janela principal")
 
             -- Atalhos de controle do Netrw
             bind(".", "gh", "Mostrar/Ocultar arquivos ocultos")
@@ -105,7 +111,6 @@ return M
 -- @README_FILE
 --
 -- @IMPORTANTE_PROFILE:
--- Configuração do Netrw abrindo via botright à direita.
--- Mapeamentos globais 'ew' e '<leader>e' para alternar o painel.
--- Mapeamentos do buffer convertidos para o padrão de teclas Vim (a, d, c, h, l, q).
+-- Configurado `vim.g.netrw_browse_split = 4` para direcionar a abertura do arquivo para o buffer principal anterior à sidebar.
+-- Atalho mantido estritamente como '<leader>e'.
 -- ==============================================================================

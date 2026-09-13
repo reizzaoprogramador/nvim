@@ -8,7 +8,7 @@ local function setup_lsp_keymaps(bufnr)
   -- Navegação e diagnósticos
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+  vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, opts)
   vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
   vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
@@ -145,7 +145,7 @@ vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
 --
 -- INCLUÍDO:
 -- - SUPORTE NATIVO PARA LINGUAGENS: GO (gopls), LUA (lua-language-server), BASH (bashls) E TS/JS (deno lsp).
--- - ATALHOS PADRÃO DE NAVEGAÇÃO E DIAGNÓSTICO (K, gd, <leader>e, [d, ]d, <leader>ca).
+-- - ATALHOS PADRÃO DE NAVEGAÇÃO E DIAGNÓSTICO.
 -- - INTEGRAÇÃO AUTO-DETECTÁVEL COM O COMPLETAR BLINK.CMP.
 -- - CONFIGURAÇÃO VISUAL PERSONALIZADA PARA MENSAGENS E SÍMBOLOS DE ERRO.
 --

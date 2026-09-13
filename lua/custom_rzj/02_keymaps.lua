@@ -3,8 +3,6 @@
 
 local map = vim.keymap.set
 
--- == OPTIONS ==
-vim.opt.showtabline = 2 -- Mostra sempre a barra de abas no topo com os buffers abertos
 
 -- == ATALHOS RAPIDOS ==
 map("i", "jj", "<Esc>", { desc = "Sair do modo de inserção" })
