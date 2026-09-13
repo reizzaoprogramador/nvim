@@ -114,3 +114,4 @@ return M
 -- Configurado `vim.g.netrw_browse_split = 4` para direcionar a abertura do arquivo para o buffer principal anterior à sidebar.
 -- Atalho mantido estritamente como '<leader>e'.
 -- ==============================================================================
+

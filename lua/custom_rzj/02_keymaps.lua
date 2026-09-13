@@ -5,7 +5,12 @@ local map = vim.keymap.set
 
 
 -- == ATALHOS RAPIDOS ==
-map("i", "jj", "<Esc>", { desc = "Sair do modo de inserção" })
+map("i", "jj", function()
+    vim.cmd("stopinsert")
+    if vim.bo.modifiable and vim.bo.buftype == "" and vim.api.nvim_buf_get_name(0) ~= "" then
+        vim.cmd("silent! write")
+    end
+end, { desc = "Sair do modo inserção e salvar buffer" })
 vim.keymap.set({ "n", "v" }, "kk", "<C-c>:qa!<CR>", {noremap = true,silent = true,desc = "Fechar editor sem salvar (qa) em Modo Normal e Visual"})
 map("i", "<C-z>", "<Esc>ui", { desc = "Desfazer - no modo inserção" })
 map("n", "<C-z>", "u", { desc = "Desfazer (Undo) - no modo normal" })

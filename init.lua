@@ -3,11 +3,14 @@
 
 -- == IMPORTS ==
 
+-- == OBRIGATORIO NO TOPO DO INIT ROOT : Garante que o leader seja o espaço antes de carregar os módulos
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
--- 1. Gerenciador de Plugins (Lazy) - Deve ser o primeiro a carregar
+-- 21. Gerenciador de Plugins (Lazy) - Deve ser o primeiro a carregar
 require("managers.manager_plugins_lazyvim")
 
--- 2. Chama o core/init que faz load registravel de todos cores lá no diretorio
+-- 3. Chama o core/init que faz load registravel de todos cores lá no diretorio
 require("custom_rzj")
 require("core")
 
