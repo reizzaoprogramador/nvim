@@ -2,6 +2,11 @@
 -- @mission: Opções globais de configuração do Neovim
 
 -- == OPTIONS ==
+-- == OBRIGATORIO NO TOPO DO INIT ROOT :Repetidos Aqui:
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+-- -- UTILS OPTIONS --
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.tabstop = 2
