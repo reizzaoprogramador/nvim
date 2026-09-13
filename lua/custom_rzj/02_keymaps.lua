@@ -8,6 +8,7 @@ vim.opt.showtabline = 2 -- Mostra sempre a barra de abas no topo com os buffers 
 
 -- == ATALHOS RAPIDOS ==
 map("i", "jj", "<Esc>", { desc = "Sair do modo de inserção" })
+vim.keymap.set({ "n", "v" }, "kk", "<C-c>:qa!<CR>", {noremap = true,silent = true,desc = "Fechar editor sem salvar (qa) em Modo Normal e Visual"})
 map("i", "<C-z>", "<Esc>ui", { desc = "Desfazer - no modo inserção" })
 map("n", "<C-z>", "u", { desc = "Desfazer (Undo) - no modo normal" })
 map("n", "U", "<C-r>", { silent = true, desc = "Refazer (Redo) - modo normal" })
@@ -46,6 +47,52 @@ map("n", "<A-Up>", "<cmd>resize -3<CR>", { desc = "Diminuir altura da janela" })
 map("n", "<A-Down>", "<cmd>resize +3<CR>", { desc = "Aumentar altura da janela" })
 map("n", "<A-Left>", "<cmd>vertical resize +5<CR>", { desc = "Aumentar largura para esquerda" })
 map("n", "<A-Right>", "<cmd>vertical resize -5<CR>", { desc = "Diminuir largura para direita" })
+
+-- Configurar os atalhos nativos do LSP para navegação de código (definição, hover e referências)
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Ir para definição" })
+vim.keymap.set("n", "gh", vim.lsp.buf.hover, { desc = "Ver documentação (Hover)" })
+vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Ver referências" })
+
+-- ==============================================================================
+-- ATALHOS DIRETOS (Substituição Rápida, Reload, LSP e Snippets)
+-- ==============================================================================
+
+-- Substituir palavra sob o cursor (<leader>cw)
+vim.keymap.set("n", "<leader>cw", ":%s/\\<<C-r><C-w>\\>/", { 
+    noremap = true, 
+    silent = false, 
+    desc = "Substituir palavra sob o cursor (Arquivo)" 
+})
+
+-- Recarregar configurações ($MYVIMRC)
+vim.keymap.set("n", "<leader>rc", function()
+    vim.cmd("source $MYVIMRC")
+    print("✨ Configurações recarregadas com sucesso!")
+end, { desc = "Recarregar configurações ($MYVIMRC)" })
+
+-- Renomear símbolos via LSP
+vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { 
+    desc = "Renomear variável/função via LSP" 
+})
+
+-- Navegação de Snippets via LuaSnip (<Tab> / <S-Tab>)
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
+    local ok, luasnip = pcall(require, "luasnip")
+    if ok and luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+    else
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
+    end
+end, { silent = true, desc = "Expandir ou avançar campo no LuaSnip" })
+
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+    local ok, luasnip = pcall(require, "luasnip")
+    if ok and luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+    else
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<S-Tab>", true, false, true), "n", false)
+    end
+end, { silent = true, desc = "Voltar campo no LuaSnip" })
 
 -- ==============================================================================
 -- @README_FILE

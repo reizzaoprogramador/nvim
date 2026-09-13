@@ -3,8 +3,6 @@
 
 local modules = {
   "core.01_display",
-  "core.02_options",
-  "core.03_save_close",
   "core.04_colorscheme",
   "core.05_statusline",
   "core.06_autocommands",
@@ -12,7 +10,6 @@ local modules = {
   "core.08_formatting",
   "core.09_abbreviations",
   "core.10_snippets",
-  "core.11_keymaps",
   "core.lsp", --  LSP por último (garante que Lazy e Blink.cmp já estejam carregados)
 }
 

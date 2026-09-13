@@ -8,10 +8,10 @@ vim.api.nvim_set_hl(0, "StlMode", { fg = pms.fg, bg = vis.bg })
 vim.api.nvim_set_hl(0, "StlGit", { fg = dir.fg, bg = pms.bg })
 
 local modes = {
-	n = "NORMAL",
-	i = "INSERT",
-	v = "VISUAL",
-	V = "V-LINE",
+	n = "N",
+	i = "I",
+	v = "V",
+	V = "VL",
 	["\22"] = "V-BLOCK",
 	c = "COMMAND",
 	t = "TERMINAL",
