@@ -1,10 +1,4 @@
--- @file: custom_rzj/01_keymaps.lua
--- @mission: Atalhos master e opções globais nativas do Neovim, custom_rzj
-
-local map = vim.keymap.set
-
--- == OPTIONS ==
-vim.opt.showtabline = 2 -- Mostra sempre a barra de abas no topo com os buffers abertos
+-- ================= BACKUPS ===============
 
 -- == ATALHOS RAPIDOS ==
 map("i", "jj", "<Esc>", { desc = "Sair do modo de inserção" })
@@ -47,14 +41,4 @@ map("n", "<A-Down>", "<cmd>resize +3<CR>", { desc = "Aumentar altura da janela" 
 map("n", "<A-Left>", "<cmd>vertical resize +5<CR>", { desc = "Aumentar largura para esquerda" })
 map("n", "<A-Right>", "<cmd>vertical resize -5<CR>", { desc = "Diminuir largura para direita" })
 
--- ==============================================================================
--- @README_FILE
---
--- @IMPORTANTE_PROFILE: 
--- - Use somente nativos vim e neovim.
--- - Adicione somente atalhos nativos e opções globais aqui.
--- - Proibido criar funções ou chamar dependências externas neste arquivo.
--- 
--- @Como_Usar:
--- Carregado automaticamente pelo loader do custom_rzj/ para prover os atalhos base.
--- ==============================================================================
+
