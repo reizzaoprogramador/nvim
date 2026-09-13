@@ -18,7 +18,7 @@ end, { silent = true })
 
 vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end)
 vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end)
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float)
 
 -- Menu Interativo: bloqueia salvamento e impede o fechamento no :wq
 vim.api.nvim_create_autocmd("BufWritePre", {
