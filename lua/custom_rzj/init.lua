@@ -1,28 +1,34 @@
 -- @file: ~/.config/nvim/lua/custom_rzj/init.lua
--- @mission: Carregar todos os módulos de configuração em ordem sequencial
+-- @mission: Carregar automaticamente todos os módulos de lua/custom_rzj em ordem alfabética
 
--- == OPTIONS FORCE ==
--- 1. mapleader só funciona aqui no init no alto
+-- Configuração obrigatória do Leader Key antes de qualquer módulo
 vim.g.mapleader = " "
-vim.opt.showtabline = 2 -- Mostra sempre a barra de abas no topo com os buffers abertos
 
+local custom_dir = vim.fn.stdpath("config") .. "/lua/custom_rzj"
+local files = vim.fn.readdir(custom_dir)
 
-local modules = {
-    "custom_rzj.netrw",
-    "custom_rzj.01_options",
-    "custom_rzj.02_keymaps",
-    "custom_rzj.03_functions_custom",
-}
+-- Filtra apenas arquivos .lua e ignora o próprio init.lua
+local lua_files = {}
+for _, file in ipairs(files) do
+    if file:sub(-4) == ".lua" and file ~= "init.lua" then
+        table.insert(lua_files, file)
+    end
+end
 
-for _, mod in ipairs(modules) do
-    local ok, loaded_module = pcall(require, mod)
+-- Ordena em ordem alfabética (01_, 02_, netrw, statusline...)
+table.sort(lua_files)
+
+-- Carrega dinamicamente cada módulo
+for _, file in ipairs(lua_files) do
+    local mod_name = "custom_rzj." .. file:sub(1, -5)
+    local ok, loaded_module = pcall(require, mod_name)
+
     if ok then
-        -- Se o módulo retornar uma tabela com a função setup(), executa automaticamente
         if type(loaded_module) == "table" and type(loaded_module.setup) == "function" then
             loaded_module.setup()
         end
     else
-        vim.notify("Erro ao carregar o módulo " .. mod .. ":\n" .. loaded_module, vim.log.levels.ERROR)
+        vim.notify("Erro ao carregar módulo: " .. mod_name .. "\n" .. tostring(loaded_module), vim.log.levels.ERROR)
     end
 end
 
@@ -30,6 +36,6 @@ end
 -- @README_FILE
 --
 -- @IMPORTANTE_PROFILE:
--- O loop agora verifica se o módulo importado exporta uma função .setup() e a chama com segurança.
--- Certifique-se de que o arquivo netrw.lua esteja localizado em: ~/.config/nvim/lua/custom_rzj/netrw.lua
+-- Escaneia o diretório lua/custom_rzj/ e executa o .setup() de forma sequencial ordenada.
+-- Para definir a ordem de prioridade, basta nomear os arquivos com numeração (ex: 01_options.lua).
 -- ==============================================================================
