@@ -1,15 +1,11 @@
--- @file: nvim/init.lua
--- @mission: Iniciar e mapear os arquivos do editor Neovim com a linguagem Lua
+-- @file: ~/.config/nvim/init.lua
+-- @mission: Inicializacao root do Neovim chamando o modulo custom_rzj
 
--- == IMPORTS ==
-
--- == OBRIGATORIO NO TOPO DO INIT ROOT : Garante que o leader seja o espaço antes de carregar os módulos
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
--- 21. Gerenciador de Plugins (Lazy) - Deve ser o primeiro a carregar
-require("managers.manager_plugins_lazyvim")
-
--- 3. Chama o core/init que faz load registravel de todos cores lá no diretorio
 require("custom_rzj")
 
+-- ==============================================================================
+-- @README_FILE
+--
+-- @IMPORTANTE_PROFILE:
+-- Delegado 100% para o require("custom_rzj"), que se encarrega de carregar os submodulos.
+-- ==============================================================================
