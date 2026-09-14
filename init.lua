@@ -12,5 +12,4 @@ require("managers.manager_plugins_lazyvim")
 
 -- 3. Chama o core/init que faz load registravel de todos cores lá no diretorio
 require("custom_rzj")
-require("core")
 
