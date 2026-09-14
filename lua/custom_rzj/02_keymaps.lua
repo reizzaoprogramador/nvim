@@ -5,7 +5,12 @@ local map = vim.keymap.set
 
 
 -- == ATALHOS RAPIDOS ==
-map("i", "jj", "<Esc>", { desc = "Sair do modo de inserção" })
+map("i", "jj", function()
+    vim.cmd("stopinsert")
+    if vim.bo.modifiable and vim.bo.buftype == "" and vim.api.nvim_buf_get_name(0) ~= "" then
+        vim.cmd("silent! write")
+    end
+end, { desc = "Sair do modo inserção e salvar buffer" })
 vim.keymap.set({ "n", "v" }, "kk", "<C-c>:qa!<CR>", {noremap = true,silent = true,desc = "Fechar editor sem salvar (qa) em Modo Normal e Visual"})
 map("i", "<C-z>", "<Esc>ui", { desc = "Desfazer - no modo inserção" })
 map("n", "<C-z>", "u", { desc = "Desfazer (Undo) - no modo normal" })
@@ -23,6 +28,8 @@ map("v", "<C-Down>", ":m '>+1<CR>gv=gv", { desc = "Mover bloco para baixo" })
 map({ "n", "i", "t", "v" }, "<C-.>", "<nop>", { desc = "BLOQUEIO DE CRASH (SEGURO - SEM INTERFERIR NA BARRA '/')"} )
 
 -- == NAVEGAÇÃO ENTRE BUFFERS E JANELAS (SPLITS) ==
+map("n", "<S-Left>",  "<cmd>bprevious<CR>", { desc = "Com shit+Seta Lado >> Ir para o buffer anterior" })
+map("n", "<S-Right>", "<cmd>bnext<CR>",     { desc = "Com shift+seta lado >> Ir para o próximo buffer" })
 map("n", "<C-Tab>", "<C-^>", { desc = "Alternar último arquivo" })
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Buffer anterior" })
 map("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Próximo buffer" })

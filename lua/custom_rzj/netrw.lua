@@ -1,5 +1,5 @@
 -- @file: lua/custom_rzj/netrw.lua
--- @mission: Configuração do explorador nativo Netrw na direita abrindo arquivos na janela principal
+-- @mission: Configuração do explorador nativo Netrw na direita com fechamento automático ao abrir arquivos
 
 local M = {}
 
@@ -70,6 +70,20 @@ function M.setup()
         vim.keymap.set("n", "<leader>e", M.toggle_netrw, { desc = "Toggle Netrw Explorer (Direita)" })
     end
 
+    -- Autofechar a janela do Netrw ao abrir/focar em qualquer arquivo
+    vim.api.nvim_create_autocmd("BufEnter", {
+        callback = function()
+            if vim.bo.filetype ~= "netrw" then
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                    local buf = vim.api.nvim_win_get_buf(win)
+                    if vim.bo[buf].filetype == "netrw" then
+                        vim.api.nvim_win_close(win, true)
+                    end
+                end
+            end
+        end,
+    })
+
     -- Mapeamentos Nativos dentro do buffer do Netrw (Padrão Vim RZJ)
     vim.api.nvim_create_autocmd("FileType", {
         pattern = "netrw",
@@ -111,6 +125,8 @@ return M
 -- @README_FILE
 --
 -- @IMPORTANTE_PROFILE:
--- Configurado `vim.g.netrw_browse_split = 4` para direcionar a abertura do arquivo para o buffer principal anterior à sidebar.
+-- Adicionado autocmd no evento BufEnter para fechar automaticamente qualquer janela 
+-- do Netrw assim que um novo buffer de arquivo for focado.
+-- Configurado `vim.g.netrw_browse_split = 4` para direcionar a abertura do arquivo para o buffer principal.
 -- Atalho mantido estritamente como '<leader>e'.
 -- ==============================================================================
