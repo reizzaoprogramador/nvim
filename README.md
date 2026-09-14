@@ -12,7 +12,6 @@ A minimal, fast Neovim configuration with zero plugins. Built entirely on Neovim
 - **Auto Formatting** - `stylua`/`prettier` on save, with LSP fallback
 
 ## Preview
-<img width="2285" height="1351" alt="image" src="https://github.com/user-attachments/assets/ae113832-b2b1-441b-8c3a-f6862a38104c" />
 
 
 ## Video
