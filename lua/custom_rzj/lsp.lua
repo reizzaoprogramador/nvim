@@ -1,10 +1,11 @@
 -- @file: $ONVIM/lua/custom_rzj/lsp.lua
 -- @mission: Gerenciamento de pacotes LSP, configuracao nativa de servidores e autoformat ao salvar
 
--- 1. Carrega dependencias nativas via vim.pack
+-- 1. Carrega dependencias nativas via vim.pack e ativa no runtime
 vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig"
 })
+vim.cmd("packadd nvim-lspconfig")
 
 -- ==============================================================================
 -- 2. SERVIDORES LSP & LINTERS
@@ -36,8 +37,8 @@ vim.lsp.config.denols = {
     settings = {
         deno = {
             enable = true,
-            lint = true,     -- Ativa o linter nativo do Deno
-            unstable = true, -- Permite acesso as APIs unstables
+            lint = true,
+            unstable = true,
             suggest = {
                 imports = {
                     hosts = {
@@ -61,25 +62,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- ==============================================================================
--- @README_FILE E MODELO PARA NOVOS PROVEDORES
--- ==============================================================================
--- 
--- @IMPORTANTE_PROFILE:
--- Copie este bloco para adicionar novos provedores no futuro:
+-- @README_FILE
 --
--- -- == NOVO LSP: [NOME_DA_LINGUAGEM] ==
--- vim.lsp.config.[NOME_DO_PROVEDOR] = {
---     cmd = { "[executavel-langserver]", "--stdio" },
---     filetypes = { "[extensao1]", "[extensao2]" },
---     root_markers = { "[arquivo.config]", ".git" },
---     settings = {
---         [nome_do_provedor] = {
---             analysis = {
---                 -- Regras de linter, paths estaticos, etc.
---             },
---         },
---     },
--- }
--- vim.lsp.enable("[NOME_DO_PROVEDOR]")
--- -- # importante o binario da linguagem alvo estar instalado , exemplo: deno --version
+-- @IMPORTANTE_PROFILE:
+-- - Inclusão do `vim.cmd("packadd nvim-lspconfig")` para resolver pendências de inicialização do vim.pack.
 -- ==============================================================================
