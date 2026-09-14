@@ -1,16 +1,35 @@
 -- @file: nvim/init.lua
--- @mission: Iniciar e mapear os arquivos do editor Neovim com a linguagem Lua
+-- @mission: Inicialização do ambiente Neovim com gerenciamento nativo vim.pack e LSP nativo (vim.lsp.config)
 
--- == IMPORTS ==
+-- == 1. GERENCIADOR DE PACOTES ==
+vim.pack.add({
+    "https://github.com/neovim/nvim-lspconfig"
+})
 
--- == OBRIGATORIO NO TOPO DO INIT ROOT : Garante que o leader seja o espaço antes de carregar os módulos
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- == 2. CONFIGURAÇÃO DO LSP NATIVO (GOPLS) ==
+vim.lsp.config.gopls = {
+    cmd = { "gopls" },
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    root_markers = { "go.work", "go.mod", ".git" },
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+            },
+            staticcheck = true,
+            completeUnimported = true,
+        },
+    },
+}
 
--- 21. Gerenciador de Plugins (Lazy) - Deve ser o primeiro a carregar
-require("managers.manager_plugins_lazyvim")
+-- Ativa o servidor gopls no runtime
+vim.lsp.enable("gopls")
 
--- 3. Chama o core/init que faz load registravel de todos cores lá no diretorio
-require("custom_rzj")
-require("core")
-
+-- ==============================================================================
+-- @README_FILE
+--
+-- @IMPORTANTE_PROFILE:
+-- A partir do Neovim 0.11+, prefira `vim.lsp.config.<server>` e `vim.lsp.enable()`
+-- em vez do legado `require('lspconfig').<server>.setup()`. Isso elimina avisos 
+-- de deprecation e utiliza o ecossistema 100% nativo.
+-- ==============================================================================

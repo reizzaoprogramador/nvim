@@ -2,10 +2,11 @@ package main
 
 import "fmt"
 
-var foo2 = "foo21"
-iiiiigggggggggggggggggi
+var naousada = "nao usada"
+
+// iiiii:iiiiigggggggggggggggggi
 
 func main() {
-	fmt.Println("oi ---- 1 ----")
+fmt.Println("oi ---- 1 ----")
 }
 
